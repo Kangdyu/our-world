@@ -47,6 +47,7 @@ module.exports = {
                     targets: '> 0.25%, not dead',
                   },
                 ],
+                '@babel/preset-typescript',
                 ['@babel/preset-react', { runtime: 'automatic' }],
               ],
               plugins: [
