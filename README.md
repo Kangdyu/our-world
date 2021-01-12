@@ -2,8 +2,14 @@
 
 ### 기술 스택
 
-TBD
+- React
+- TypeScript
+- TBD
 
 ### 사용법
 
-TBD
+```
+npm install
+npm start
+// 이후 localhost:3000 으로 접속
+```
