@@ -4,6 +4,6 @@ import { ICountryInfo } from './types';
 const API_URL =
   'https://restcountries.eu/rest/v2/all?fields=alpha2Code;capital;name;region;callingCodes';
 
-export function fetchCountryInfo(): Promise<AxiosResponse<ICountryInfo>> {
+export function fetchCountryList(): Promise<AxiosResponse<ICountryInfo[]>> {
   return axios.get(API_URL);
 }
