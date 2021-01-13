@@ -12,6 +12,13 @@ const getCountryListError = createAction<string>(
   'countries/getCountryListError'
 );
 
+export const createCountryItem = createAction<ICountryInfo>(
+  'countries/createCountryItem'
+);
+export const deleteCountryItem = createAction<string>(
+  'countries/deleteCountryItem'
+);
+
 function* getCountryListSaga() {
   try {
     const { data: countries }: AxiosResponse<ICountryInfo[]> = yield call(
@@ -54,5 +61,15 @@ export const countriesReducer = createReducer(initialState, (builder) => {
       ...state,
       isLoading: false,
       error: action.payload,
-    }));
+    }))
+    .addCase(createCountryItem, (state, action) => {
+      if (!state.data) state.data = [action.payload];
+      state.data.push(action.payload);
+    })
+    .addCase(deleteCountryItem, (state, action) => {
+      if (!state.data) state.data = [];
+      state.data = state.data.filter(
+        (country) => country.name !== action.payload
+      );
+    });
 });

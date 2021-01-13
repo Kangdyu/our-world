@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { ICountryInfo } from '../api/types';
 import { RootState, useAppDispatch } from '../store';
-import { getCountryList } from '../store/countriesSlice';
+import { deleteCountryItem, getCountryList } from '../store/countriesSlice';
 import { sortBy } from '../store/sortSlice';
 
 const Table = styled.table`
@@ -90,6 +90,10 @@ function CountryTable() {
     dispatch(sortBy(field));
   };
 
+  const onDeleteButtonClick = (name: string) => {
+    dispatch(deleteCountryItem(name));
+  };
+
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error occurred: {error}</div>;
   if (!data) return <div>No Data.</div>;
@@ -132,7 +136,9 @@ function CountryTable() {
               ))}
             </td>
             <td>
-              <button>x</button>
+              <button onClick={() => onDeleteButtonClick(country.name)}>
+                x
+              </button>
             </td>
           </tr>
         ))}
