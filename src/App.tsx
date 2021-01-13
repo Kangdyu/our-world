@@ -1,5 +1,5 @@
 import { Provider } from 'react-redux';
-import CountryList from './components/CountryList';
+import Home from './components/Home';
 import { store } from './store';
 import { GlobalStyle } from './styles';
 
@@ -7,7 +7,7 @@ function App() {
   return (
     <Provider store={store}>
       <GlobalStyle />
-      <CountryList />
+      <Home />
     </Provider>
   );
 }
