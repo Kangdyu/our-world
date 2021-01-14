@@ -1,14 +1,15 @@
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import { useAppDispatch } from '../store';
-import { searchTerm } from '../store/searchSlice';
+import { setSearchTerm, setSearchTermAsync } from '../store/searchSlice';
 
 const Form = styled.form`
   position: relative;
   width: 100%;
   margin-bottom: 50px;
 
-  span {
+  label {
     position: absolute;
     left: 20px;
     top: 18px;
@@ -33,17 +34,22 @@ type Input = {
 };
 
 function SearchForm() {
-  const { register, handleSubmit } = useForm<Input>();
+  const { register, handleSubmit, watch } = useForm<Input>();
+  const term = watch('term', '');
   const dispatch = useAppDispatch();
 
+  useEffect(() => {
+    dispatch(setSearchTermAsync(term));
+  }, [term, dispatch]);
+
   const onSubmit = ({ term }: Input) => {
-    dispatch(searchTerm(term));
+    dispatch(setSearchTerm(term));
   };
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      <span>검색</span>
-      <SearchInput name="term" ref={register} />
+      <label htmlFor="term">검색</label>
+      <SearchInput id="term" name="term" ref={register} />
     </Form>
   );
 }
