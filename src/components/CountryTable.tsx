@@ -54,6 +54,22 @@ const Table = styled.table`
   }
 `;
 
+function filterData(data: ICountryInfo[], searchTerm: string) {
+  const lowerCaseSearchTerm = searchTerm.toLowerCase();
+  return data.filter((country) => {
+    if (
+      country.name.toLowerCase().includes(lowerCaseSearchTerm) ||
+      country.alpha2Code.toLowerCase().includes(lowerCaseSearchTerm) ||
+      country.region.toLowerCase().includes(lowerCaseSearchTerm) ||
+      country.capital.toLowerCase().includes(lowerCaseSearchTerm) ||
+      country.callingCodes.find((callingCode) =>
+        callingCode.includes(searchTerm)
+      )
+    )
+      return true;
+  });
+}
+
 function sortData(
   data: ICountryInfo[],
   field: keyof ICountryInfo,
@@ -80,6 +96,7 @@ function CountryTable() {
   const { sortField, isAscendingOrder } = useSelector(
     (state: RootState) => state.sort
   );
+  const searchTerm = useSelector((state: RootState) => state.search);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -98,7 +115,10 @@ function CountryTable() {
   if (error) return <div>Error occurred: {error}</div>;
   if (!data) return <div>No Data.</div>;
 
-  const sorted = sortData(data, sortField, isAscendingOrder);
+  const filtered = searchTerm ? filterData(data, searchTerm) : data;
+  const sorted = sortData(filtered, sortField, isAscendingOrder);
+
+  if (sorted.length === 0) return <div>데이터가 없습니다.</div>;
 
   return (
     <Table>

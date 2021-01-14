@@ -4,6 +4,7 @@ import createSagaMiddleware from 'redux-saga';
 import rootSaga from './saga';
 import { countriesReducer } from './countriesSlice';
 import { sortReducer } from './sortSlice';
+import { searchReducer } from './searchSlice';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -11,6 +12,7 @@ export const store = configureStore({
   reducer: {
     countries: countriesReducer,
     sort: sortReducer,
+    search: searchReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(sagaMiddleware),
