@@ -103,7 +103,7 @@ function CountryAddForm() {
         ))}
       </FormRow>
 
-      <input type="submit" />
+      <input type="submit" value="등록" />
     </Form>
   );
 }
