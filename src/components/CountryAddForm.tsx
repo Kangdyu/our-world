@@ -1,8 +1,9 @@
 import { Fragment, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { ICountryInfo } from '../api/types';
-import { useAppDispatch } from '../store';
+import { RootState, useAppDispatch } from '../store';
 import { createCountryItem } from '../store/countriesSlice';
 
 const Form = styled.form`
@@ -45,16 +46,35 @@ const Error = styled.span`
 `;
 
 function CountryAddForm() {
-  const [callingCodeCount, setCallingCodeCount] = useState(1);
-  const { register, handleSubmit, errors } = useForm<ICountryInfo>();
+  const { register, handleSubmit, errors, reset } = useForm<ICountryInfo>();
+  const [submitError, setSubmitError] = useState<string>('');
+
+  const { data: countriesData } = useSelector(
+    (state: RootState) => state.countries
+  );
   const dispatch = useAppDispatch();
 
-  const onSubmit = (data: ICountryInfo) => {
-    dispatch(createCountryItem(data));
+  const [callingCodeCount, setCallingCodeCount] = useState(1);
+
+  const onSubmit = (formData: ICountryInfo) => {
+    if (!countriesData) return;
+
+    const { name } = formData;
+    const checkDuplicate = countriesData.find(
+      (country) => country.name === name
+    );
+    if (checkDuplicate) {
+      setSubmitError('이미 존재하는 나라입니다.');
+    } else {
+      setSubmitError('');
+      reset();
+      dispatch(createCountryItem(formData));
+    }
   };
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
+      {submitError && <Error>{submitError}</Error>}
       <FormRow>
         <label htmlFor="name">
           나라 이름 <span>*</span>
