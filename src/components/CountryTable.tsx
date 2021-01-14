@@ -114,9 +114,9 @@ function CountryTable() {
     dispatch(deleteCountryItem(name));
   };
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error occurred: {error}</div>;
-  if (!data) return <div>No Data.</div>;
+  if (isLoading) return <div>데이터를 불러오는 중 ...</div>;
+  if (error) return <div>에러가 발생했습니다: {error}</div>;
+  if (!data) return <div>데이터가 없습니다.</div>;
 
   const filtered = searchTerm ? filterData(data, searchTerm) : data;
   const sorted = sortData(filtered, sortField, isAscendingOrder);
@@ -141,7 +141,7 @@ function CountryTable() {
           </th>
           <th onClick={() => onFieldClick('callingCodes')}>
             국가 전화번호{' '}
-            {sortField === 'callingCodes' && (isAscendingOrder ? '↓' : '↑')}
+            {sortField === 'callingCodes' && (isAscendingOrder ? '↑' : '↓')}
           </th>
           <th></th>
         </tr>
