@@ -6,6 +6,7 @@ import { searchTerm } from '../store/searchSlice';
 const Form = styled.form`
   position: relative;
   width: 100%;
+  margin-bottom: 50px;
 
   span {
     position: absolute;

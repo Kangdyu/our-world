@@ -8,6 +8,7 @@ import { createCountryItem } from '../store/countriesSlice';
 const Form = styled.form`
   width: 100%;
   padding: 20px 0;
+  margin-bottom: 20px;
 
   border-radius: 10px;
   background-color: #f1f2f3;
