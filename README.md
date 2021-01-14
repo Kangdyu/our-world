@@ -3,8 +3,12 @@
 ### 기술 스택
 
 - React
+- Webpack
 - TypeScript
-- TBD
+- Redux
+- redux-saga
+- react-hook-form
+- styled-components
 
 ### 사용법
 

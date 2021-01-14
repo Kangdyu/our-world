@@ -11,7 +11,7 @@ const Form = styled.form`
   margin-bottom: 20px;
 
   border-radius: 10px;
-  background-color: #f1f2f3;
+  background-color: #fafafa;
 
   display: flex;
   flex-direction: column;

@@ -7,19 +7,22 @@ import { deleteCountryItem, getCountryList } from '../store/countriesSlice';
 import { sortBy } from '../store/sortSlice';
 
 const Table = styled.table`
+  margin-bottom: 100px;
+
   thead {
     tr {
       height: 50px;
-      border-bottom: 2px solid black;
+      border-bottom: 2px solid #bbb;
     }
   }
 
   tbody {
     tr {
       height: 80px;
+      border-bottom: 1px solid #f1f2f3;
 
       &:nth-child(2n - 1) {
-        background-color: #f1f2f6;
+        background-color: #fafafa;
       }
     }
   }
@@ -146,16 +149,16 @@ function CountryTable() {
       <tbody>
         {sorted.map((country) => (
           <tr key={country.name}>
-            <td>{country.name}</td>
-            <td>{country.alpha2Code}</td>
-            <td>{country.region}</td>
-            <td>{country.capital}</td>
-            <td>
+            <td width="320">{country.name}</td>
+            <td width="70">{country.alpha2Code}</td>
+            <td width="110">{country.region}</td>
+            <td width="150">{country.capital}</td>
+            <td width="90">
               {country.callingCodes.map((callingCode) => (
                 <span key={callingCode}>{callingCode}</span>
               ))}
             </td>
-            <td>
+            <td width="60">
               <button onClick={() => onDeleteButtonClick(country.name)}>
                 x
               </button>
