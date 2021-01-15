@@ -35,6 +35,7 @@ const FormRow = styled.div`
   }
 
   input {
+    width: 200px;
     font: inherit;
   }
 `;
@@ -42,7 +43,7 @@ const FormRow = styled.div`
 const Text = styled.span`
   font-size: 0.9rem;
   color: red;
-  margin: 10px 0;
+  margin-bottom: 10px;
 `;
 
 const ErrorText = styled(Text)`
@@ -101,9 +102,15 @@ function CountryAddForm() {
         <label htmlFor="name">
           나라 이름 <span>*</span>
         </label>
-        <input id="name" name="name" ref={register({ required: true })} />
-        {errors.name && <ErrorText>필수 입력 사항입니다.</ErrorText>}
+        <input
+          id="name"
+          name="name"
+          ref={register({
+            required: { value: true, message: '필수 입력 사항입니다.' },
+          })}
+        />
       </FormRow>
+      {errors.name && <ErrorText>{errors.name.message}</ErrorText>}
 
       <FormRow>
         <label htmlFor="alpha2Code">
@@ -112,10 +119,19 @@ function CountryAddForm() {
         <input
           id="alpha2Code"
           name="alpha2Code"
-          ref={register({ required: true })}
+          ref={register({
+            required: {
+              value: true,
+              message: '필수 입력 사항입니다.',
+            },
+            pattern: {
+              value: /^[A-Z]{2}$/,
+              message: '영어 대문자 2개로 이루어진 값이어야합니다. ex) KR',
+            },
+          })}
         />
-        {errors.alpha2Code && <ErrorText>필수 입력 사항입니다.</ErrorText>}
       </FormRow>
+      {errors.alpha2Code && <ErrorText>{errors.alpha2Code.message}</ErrorText>}
 
       <FormRow>
         <label htmlFor="region">대륙</label>
