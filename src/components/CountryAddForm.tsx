@@ -39,15 +39,28 @@ const FormRow = styled.div`
   }
 `;
 
-const Error = styled.span`
+const Text = styled.span`
   font-size: 0.9rem;
   color: red;
   margin: 10px 0;
 `;
 
+const ErrorText = styled(Text)`
+  color: red;
+`;
+
+const SuccessText = styled(Text)`
+  color: #2ecc71;
+`;
+
+type SubmitState = {
+  type: 'success' | 'error';
+  message: string;
+};
+
 function CountryAddForm() {
   const { register, handleSubmit, errors, reset } = useForm<ICountryInfo>();
-  const [submitError, setSubmitError] = useState<string>('');
+  const [submitState, setSubmitState] = useState<SubmitState | null>(null);
 
   const { data: countriesData } = useSelector(
     (state: RootState) => state.countries
@@ -64,9 +77,12 @@ function CountryAddForm() {
       (country) => country.name === name
     );
     if (checkDuplicate) {
-      setSubmitError('이미 존재하는 나라입니다.');
+      setSubmitState({ type: 'error', message: '이미 존재하는 나라입니다.' });
     } else {
-      setSubmitError('');
+      setSubmitState({
+        type: 'success',
+        message: `'${name}' 나라가 등록되었습니다.`,
+      });
       reset();
       dispatch(createCountryItem(formData));
     }
@@ -74,13 +90,19 @@ function CountryAddForm() {
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      {submitError && <Error>{submitError}</Error>}
+      {submitState?.type === 'error' && (
+        <ErrorText>{submitState.message}</ErrorText>
+      )}
+      {submitState?.type === 'success' && (
+        <SuccessText>{submitState.message}</SuccessText>
+      )}
+
       <FormRow>
         <label htmlFor="name">
           나라 이름 <span>*</span>
         </label>
         <input id="name" name="name" ref={register({ required: true })} />
-        {errors.name && <Error>필수 입력 사항입니다.</Error>}
+        {errors.name && <ErrorText>필수 입력 사항입니다.</ErrorText>}
       </FormRow>
 
       <FormRow>
@@ -92,7 +114,7 @@ function CountryAddForm() {
           name="alpha2Code"
           ref={register({ required: true })}
         />
-        {errors.alpha2Code && <Error>필수 입력 사항입니다.</Error>}
+        {errors.alpha2Code && <ErrorText>필수 입력 사항입니다.</ErrorText>}
       </FormRow>
 
       <FormRow>
