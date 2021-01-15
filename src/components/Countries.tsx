@@ -30,7 +30,7 @@ function Countries() {
       const { scrollHeight, clientHeight } = document.documentElement;
       const scrollEnd = scrollHeight - clientHeight;
 
-      if (window.scrollY === scrollEnd) {
+      if (window.pageYOffset === scrollEnd) {
         let next = dataLoadCount + DATA_LOAD_RATIO;
         if (next > data.length) next = data.length;
         setDataLoadCount(next);

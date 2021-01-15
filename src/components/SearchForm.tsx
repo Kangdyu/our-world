@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form/dist/index.ie11';
 import styled from 'styled-components';
 import { useAppDispatch } from '../store';
 import { setSearchTerm, setSearchTermAsync } from '../store/searchSlice';

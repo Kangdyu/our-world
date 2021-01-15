@@ -1,5 +1,5 @@
 import { Fragment, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form/dist/index.ie11';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { ICountryInfo } from '../api/types';

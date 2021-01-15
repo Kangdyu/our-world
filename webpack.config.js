@@ -29,6 +29,8 @@ module.exports = {
       }
     : undefined,
 
+  target: ['web', 'es5'],
+
   module: {
     rules: [
       {
@@ -36,7 +38,7 @@ module.exports = {
         exclude: /node_modules/,
         use: [
           {
-            loader: require.resolve('babel-loader'),
+            loader: 'babel-loader',
             options: {
               presets: [
                 [
@@ -47,12 +49,10 @@ module.exports = {
                     targets: '> 0.25%, not dead',
                   },
                 ],
-                '@babel/preset-typescript',
                 ['@babel/preset-react', { runtime: 'automatic' }],
+                '@babel/preset-typescript',
               ],
-              plugins: [
-                isDevelopment && require.resolve('react-refresh/babel'),
-              ].filter(Boolean),
+              plugins: [isDevelopment && 'react-refresh/babel'].filter(Boolean),
             },
           },
         ],
