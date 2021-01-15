@@ -1,9 +1,8 @@
-import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { ICountryInfo } from '../api/types';
 import { RootState, useAppDispatch } from '../store';
-import { deleteCountryItem, getCountryList } from '../store/countriesSlice';
+import { deleteCountryItem } from '../store/countriesSlice';
 import { sortBy } from '../store/sortSlice';
 
 const Table = styled.table`
@@ -57,54 +56,15 @@ const Table = styled.table`
   }
 `;
 
-function filterData(data: ICountryInfo[], searchTerm: string) {
-  const lowerCaseSearchTerm = searchTerm.toLowerCase();
-  return data.filter((country) => {
-    if (
-      country.name.toLowerCase().includes(lowerCaseSearchTerm) ||
-      country.alpha2Code.toLowerCase().includes(lowerCaseSearchTerm) ||
-      country.region.toLowerCase().includes(lowerCaseSearchTerm) ||
-      country.capital.toLowerCase().includes(lowerCaseSearchTerm) ||
-      country.callingCodes.find((callingCode) =>
-        callingCode.includes(searchTerm)
-      )
-    )
-      return true;
-  });
-}
+type Props = {
+  countriesData: ICountryInfo[];
+};
 
-function sortData(
-  data: ICountryInfo[],
-  field: keyof ICountryInfo,
-  isAscendingOrder: boolean
-) {
-  return [...data].sort((a, b) => {
-    let A, B;
-    if (field === 'callingCodes') {
-      A = a.callingCodes[0].split(' ').join('');
-      B = b.callingCodes[0].split(' ').join('');
-    } else {
-      A = a[field];
-      B = b[field];
-    }
-
-    return isAscendingOrder ? A.localeCompare(B) : B.localeCompare(A);
-  });
-}
-
-function CountryTable() {
-  const { data, isLoading, error } = useSelector(
-    (state: RootState) => state.countries
-  );
+function CountryTable({ countriesData }: Props) {
   const { sortField, isAscendingOrder } = useSelector(
     (state: RootState) => state.sort
   );
-  const searchTerm = useSelector((state: RootState) => state.search);
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(getCountryList());
-  }, []);
 
   const onFieldClick = (field: keyof ICountryInfo) => {
     dispatch(sortBy(field));
@@ -113,15 +73,6 @@ function CountryTable() {
   const onDeleteButtonClick = (name: string) => {
     dispatch(deleteCountryItem(name));
   };
-
-  if (isLoading) return <div>데이터를 불러오는 중 ...</div>;
-  if (error) return <div>에러가 발생했습니다: {error}</div>;
-  if (!data) return <div>데이터가 없습니다.</div>;
-
-  const filtered = searchTerm ? filterData(data, searchTerm) : data;
-  const sorted = sortData(filtered, sortField, isAscendingOrder);
-
-  if (sorted.length === 0) return <div>데이터가 없습니다.</div>;
 
   return (
     <Table>
@@ -147,7 +98,7 @@ function CountryTable() {
         </tr>
       </thead>
       <tbody>
-        {sorted.map((country) => (
+        {countriesData.map((country) => (
           <tr key={country.name}>
             <td width="320">{country.name}</td>
             <td width="70">{country.alpha2Code}</td>

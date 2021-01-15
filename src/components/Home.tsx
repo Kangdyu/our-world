@@ -1,9 +1,9 @@
-import CountryTable from './CountryTable';
 import Banner from './Banner';
 import CountryAddForm from './CountryAddForm';
 import SearchForm from './SearchForm';
 import { useState } from 'react';
 import styled from 'styled-components';
+import Countries from './Countries';
 
 const AddFormButton = styled.button<{ selected: boolean }>`
   width: 200px;
@@ -37,7 +37,7 @@ function Home() {
       </AddFormButton>
       {isOpenAddForm && <CountryAddForm />}
       <SearchForm />
-      <CountryTable />
+      <Countries />
     </>
   );
 }
