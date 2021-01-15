@@ -27,7 +27,7 @@ function Home() {
   const [isOpenAddForm, setIsOpenAddForm] = useState(false);
 
   return (
-    <>
+    <main>
       <Banner />
       <AddFormButton
         onClick={() => setIsOpenAddForm(!isOpenAddForm)}
@@ -38,7 +38,7 @@ function Home() {
       {isOpenAddForm && <CountryAddForm />}
       <SearchForm />
       <Countries />
-    </>
+    </main>
   );
 }
 

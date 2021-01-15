@@ -12,7 +12,11 @@ const Container = styled.div`
 `;
 
 function Banner() {
-  return <Container>Our World</Container>;
+  return (
+    <Container>
+      <h1>Our World</h1>
+    </Container>
+  );
 }
 
 export default Banner;
