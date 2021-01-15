@@ -29,7 +29,7 @@ module.exports = {
       }
     : undefined,
 
-  target: ['web', 'es5'],
+  target: isDevelopment ? 'web' : ['web', 'es5'],
 
   module: {
     rules: [
